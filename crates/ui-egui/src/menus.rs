@@ -1,3 +1,4 @@
+// Modified by The Agent Factory for Claude Academy: rebranding and web language detection (see BRANDING.md).
 //! The menu bar (Illustrator's menu tree) and UI-level commands.
 //!
 //! Items bound to a command id run through [`VectorcraftApp::run`]. Items not implemented yet are
@@ -298,7 +299,7 @@ pub const UI_COMMANDS: &[(&str, &str, &str, &str)] = &[
         "",
         "{} opens the Save PDF dialog; with params = document.exportPdf options written to path (asked when missing; viewAfterSaving opens the file) → {path, bytes, warnings}",
     ),
-    ("help.about", "About VectorCraft", "", "{}"),
+    ("help.about", "About Atelier Vector", "", "{}"),
     ("help.commandPalette", "Search Commands…", "Cmd+Shift+/", "{}"),
     ("app.quit", "Quit VectorCraft", "Cmd+Q", "{}"),
     (
@@ -1903,8 +1904,8 @@ pub fn menu_tree() -> Vec<(&'static str, Vec<Item>)> {
         (
             "VectorCraft",
             vec![
-                c("About VectorCraft", "help.about"),
-                c("Join Our Discord", "help.discord"),
+                c("About Atelier Vector", "help.about"),
+                c("Claude Academy community", "help.discord"),
                 Sep,
                 c("Settings…", "edit.preferences"),
                 sub(
@@ -2531,15 +2532,15 @@ pub fn menu_tree() -> Vec<(&'static str, Vec<Item>)> {
         (
             "Help",
             vec![
-                c("Join Our Discord", "help.discord"),
-                c("ArtCraft Website", "help.website"),
-                c("VectorCraft on getartcraft.com", "help.appPage"),
+                c("Claude Academy community", "help.discord"),
+                c("Claude Academy website", "help.website"),
+                c("Atelier Vector on claudeacademy.ca", "help.appPage"),
                 c("VectorCraft on GitHub", "help.github"),
                 Sep,
                 c("Search Commands…", "help.commandPalette"),
                 todos("VectorCraft Help…", "F1"),
                 Sep,
-                c("About VectorCraft", "help.about"),
+                c("About Atelier Vector", "help.about"),
             ],
         ),
     ]

@@ -1,3 +1,4 @@
+// Modified by The Agent Factory for Claude Academy: rebranding and web language detection (see BRANDING.md).
 //! The macOS menu bar: the menus of the in-window bar ([`crate::menus::menu_tree`], each item as
 //! [`crate::menus::entry`] shows it), laid out the way a Mac app's are and handed to a platform
 //! [`Backend`] (the desktop app's, through muda).
@@ -8,7 +9,7 @@
 //!   page (General… ⌘K first); Language; Appearance (the UI brightness); Services; Hide VectorCraft
 //!   ⌃⌘H (⌘H stays View › Hide Edges), Hide Others ⌥⌘H, Show All; and Quit ⌘Q, still the app's own
 //!   `app.quit`, so documents with unsaved changes are asked about. These leave the other menus
-//!   (Edit › Preferences…, Help › About), and Join Our Discord stays under Help only;
+//!   (Edit › Preferences…, Help › About), and Claude Academy community stays under Help only;
 //! - **Window** gets Minimize ⌃⌘M, Zoom and Bring All to Front, and **Help** the system's search
 //!   field;
 //! - a system key already bound to a command keeps the command's: the system item goes without.
@@ -318,7 +319,7 @@ pub fn mac_layout(bar: &MenuBar, lang: Lang) -> Layout {
     let quit = take_items(&mut bar, "app.quit").into_iter().next();
     let language = take_submenu(&mut bar, "app.language");
     let appearance = take_submenu(&mut bar, "window.brightness");
-    // Its other items (Join Our Discord) stay where the in-window bar also has them: Help.
+    // Its other items (Claude Academy community) stay where the in-window bar also has them: Help.
     bar.menus.retain(|m| m.role != MenuRole::App);
 
     let mut app = Vec::new();

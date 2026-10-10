@@ -1,0 +1,60 @@
+# Copy to .github/workflows/upstream-sync.yml on the `academy` branch of each fork.
+# Weekly: if upstream has a newer release tag than the one `academy` is based on, open a PR
+# "Upgrade to vX.Y.Z" that rebases our rebrand onto it (by re-running rebrand.py on the new tag).
+# A human reviews, merges and tags academy-vX.Y.Z-1. Nothing deploys automatically.
+name: Upstream sync (weekly)
+on:
+  schedule:
+    - cron: "0 13 * * 1"   # Mondays 09:00 Montreal
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          repository: The-Agent-Factory/atelier-web-deploy
+          path: .deploy
+      - name: Find newest upstream release
+        id: up
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          APP="${GITHUB_REPOSITORY#*/}"
+          LATEST="$(gh api "repos/storytold/$APP/releases/latest" --jq .tag_name)"
+          CURRENT="$(git describe --tags --abbrev=0 --match 'v*' HEAD 2>/dev/null || echo none)"
+          echo "app=$APP latest=$LATEST current=$CURRENT"
+          echo "app=$APP" >> "$GITHUB_OUTPUT"; echo "latest=$LATEST" >> "$GITHUB_OUTPUT"
+          [ "$LATEST" != "$CURRENT" ] && echo "new=1" >> "$GITHUB_OUTPUT" || true
+      - name: Rebrand the new tag and open a PR
+        if: steps.up.outputs.new == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          APP: ${{ steps.up.outputs.app }}
+          TAG: ${{ steps.up.outputs.latest }}
+        run: |
+          git remote add upstream "https://github.com/storytold/$APP" || true
+          git fetch upstream --tags
+          BR="upgrade-$TAG"
+          export GIT_AUTHOR_NAME=atelier-bot GIT_AUTHOR_EMAIL=noreply@theagentfactory.ai
+          export GIT_COMMITTER_NAME=atelier-bot GIT_COMMITTER_EMAIL=noreply@theagentfactory.ai
+          git switch -c "$BR" origin/academy
+          # Merge commit (parents: academy + upstream tag) whose tree is exactly the upstream tag
+          # with the rebrand re-applied: no conflicts, and the PR diff shows upstream's changes.
+          git merge --no-commit -s ours "$TAG"
+          git read-tree -u --reset "$TAG"
+          git checkout origin/academy -- .github/workflows/academy-web-release.yml .github/workflows/upstream-sync.yml
+          python3 .deploy/rebrand/rebrand.py "$APP" .
+          rm -rf .deploy
+          git add -A
+          git commit -m "Upgrade to $TAG (rebrand re-applied)"
+          git push -f origin "$BR"
+          gh pr create --base academy --head "$BR" --title "Upgrade to $TAG" \
+            --body "Upstream released $TAG. rebrand.py re-applied cleanly (it fails if a rule no longer matches). Review the upstream changelog, merge, then tag academy-${TAG}-1." \
+            || echo "PR already open"

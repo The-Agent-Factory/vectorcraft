@@ -1,3 +1,4 @@
+// Modified by The Agent Factory for Claude Academy: rebranding and web language detection (see BRANDING.md).
 //! The macOS menu bar's model ([`crate::native_menu`]), tested on every platform with a fake
 //! backend: the Mac layout of the in-window menus, the keys it hands back to egui, the clicks it
 //! runs and when it reads the menus again.
@@ -151,7 +152,7 @@ fn language_and_appearance_are_in_the_app_menu() {
 }
 
 /// Everything the in-window bar lists is in the Mac menu bar, once: what moved to the app menu
-/// (About, Settings, Quit, Language, UI Brightness) leaves its other places, and Join Our Discord
+/// (About, Settings, Quit, Language, UI Brightness) leaves its other places, and Claude Academy community
 /// stays under Help.
 #[test]
 fn every_in_window_item_is_in_the_mac_menu_bar_once() {

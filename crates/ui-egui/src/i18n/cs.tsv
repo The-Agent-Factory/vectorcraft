@@ -1,3 +1,4 @@
+# Modified by The Agent Factory for Claude Academy: rebranding and web language detection (see BRANDING.md).
 # Czech (cs) catalog. Same format as zh-hant.tsv:  context <TAB> source <TAB> translation
 # (empty context = a plain UI string; `@id` = a command id; `@plural` = "one|few|other" forms).
 #
@@ -9,10 +10,10 @@
 # back to English. Left in English on purpose (`MENU_KEEP_AS_IS` in the tests): the product name,
 # language names, OpenType, the built-in workspace names and the bracketed perspective grid preset
 # names.
-	About VectorCraft	O aplikaci VectorCraft
+	About Atelier Vector	About Atelier Vector
 	Align to Path	Zarovnat k cestě
 	Cut Path at Selected Anchor Points	Rozdělit cestu ve vybraných kotevních bodech
-	Join Our Discord	Připojit se k našemu Discordu
+	Claude Academy community	Claude Academy community
 	Settings…	Nastavení…
 	Language	Jazyk
 	UI Brightness	Jas rozhraní
@@ -563,8 +564,8 @@
 	Save Swatch Library…	Uložit knihovnu vzorníku…
 	Symbol Libraries	Knihovny symbolů
 	Help	Nápověda
-	ArtCraft Website	Web ArtCraft
-	VectorCraft on getartcraft.com	VectorCraft na getartcraft.com
+	Claude Academy website	Claude Academy website
+	Atelier Vector on claudeacademy.ca	Atelier Vector on claudeacademy.ca
 	VectorCraft on GitHub	VectorCraft na GitHubu
 	Search Commands…	Hledat příkazy…
 	VectorCraft Help…	Nápověda VectorCraft…
