@@ -13,7 +13,7 @@ const DISCORD: Color32 = Color32::from_rgb(0x58, 0x65, 0xF2);
 
 /// The Discord button's label, height and width.
 fn discord_layout(ui: &Ui, large: bool) -> (std::sync::Arc<egui::Galley>, f32, f32) {
-    let (h, font, label) = if large { (36.0, theme::semibold(14.0), tl!("Join our Discord")) } else { (24.0, theme::semibold(12.0), "Discord") };
+    let (h, font, label) = if large { (36.0, theme::semibold(14.0), tl!("Claude Academy community")) } else { (24.0, theme::semibold(12.0), "Community") };
     let galley = ui.painter().layout_no_wrap(label.to_string(), font, Color32::WHITE);
     let w = galley.size().x + h * 0.55 + h * 0.9;
     (galley, h, w)
